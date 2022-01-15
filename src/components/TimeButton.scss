@@ -1,0 +1,25 @@
+@import "../color-themes";
+
+.timebutton {
+    border-width: 0pc;
+    border-radius: 0.4pc;
+    margin: 0.2pc;
+    background-color: #f2cc93;
+    @include set_font_fam;
+}
+
+//Desktop
+@media only screen and (min-width: 600px) {
+    .timebutton {
+        width: 6vw;
+        height: 4vh;
+    }
+}
+
+//Mobile
+@media only screen and (max-width: 600px) {
+    .timebutton {
+        width: 15vw;
+        height: 4vh;
+    }
+}

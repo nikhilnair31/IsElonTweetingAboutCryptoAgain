@@ -1,0 +1,147 @@
+@import "../color-themes";
+
+.dashboard {
+    .header {
+        .title {
+            @include set_font_fam;
+            color: #f2cc93;
+            font-weight: bolder;
+        }
+        .subtext {
+            font-weight: lighter;
+        }
+        .crptofiat_container {
+            .crptofiat_input{
+                @include set_font_fam;
+                text-align: center;
+                background: #2d2d2d;
+                color: #c9c9c9;
+                border: 0pc;
+                height: 5vh;
+                font-size: 1pc;
+                border-radius: 0.4pc;
+            }
+            .crptofiat_button{
+                @include set_font_fam;
+                text-align: center;
+                background: #2d2d2d;
+                color: #c9c9c9;
+                border: 0pc;
+                height: 5vh;
+                border-radius: 0.4pc;
+                @include all_transition_durations;
+                &:hover {
+                    background: #f2cc93;
+                    color: #2d2d2d;
+                }
+            }
+        }
+    }
+}
+
+.custom-tooltip {
+    @include set_font_fam;
+    background-color: "black";
+    border-radius: 3pc;
+
+    .label {
+        margin: 1pc 2pc 1pc 2pc;
+        font-size: '0.9rem';
+        color: "white";
+    }
+}
+
+//Desktop
+@media only screen and (min-width: 600px) {
+    .dashboard {
+        .header {
+            margin: 1pc;
+            .title {
+                font-size: 2em;
+                margin: 1.5pc;
+            }
+            .subtext {
+                font-size: 1em;
+                margin: 1.5pc;
+            }
+            .crptofiat_container {
+                margin: 1pc;
+                .crptofiat_input{
+                    width: 10vw;
+                    padding: 0pc;
+                    margin: 0pc 0.5pc;
+                }
+                .crptofiat_button{
+                    width: 10vw;
+                    padding: 0pc;
+                    margin: 0pc 0.5pc;
+                }
+            }
+        }
+    }
+    .main_chart_container {
+        margin-top: 1.5pc;
+        margin-bottom: 1.5pc;
+    }
+    .timebutton_container {
+        display: flex;
+        justify-content: center;
+        padding: 0.5pc;
+    }
+    .socials_container {
+        display: flex;
+        justify-content: center;
+        padding: 0.5pc;
+    }
+}
+
+//Mobile
+@media only screen and (max-width: 600px) {
+    .dashboard {
+        .header {
+            padding: 0.5pc;
+            margin: 1pc;
+            .title {
+                font-size: 2em;
+                margin: 0pc;
+            }
+            .subtext {
+                font-size: 1em;
+                margin-top: 1pc;
+            }
+            .crptofiat_container {
+                // margin: 1pc 0pc 1pc 0pc;
+                display: flex;
+                justify-content: space-between;
+                .crptofiat_input{
+                    width: 26vw;
+                    padding: 0pc;
+                    margin: 0pc 0.1pc;
+                    font-size: 0.8pc;
+                }
+                .crptofiat_button{
+                    width: 26vw;
+                    padding: 0pc;
+                    margin: 0pc 0.1pc;
+                    font-size: 0.8pc;
+                }
+            }
+        }
+    }
+    .main_chart_container {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5pc;
+        margin-bottom: 1.5pc;
+    }
+    .timebutton_container {
+        display: flex;
+        justify-content: center;
+        margin: 1pc;
+    }
+    .socials_container {
+        display: flex;
+        justify-content: center;
+        margin: 0.5pc;
+    }
+}

@@ -1,0 +1,31 @@
+@import "../color-themes";
+
+.socailbtn {
+    cursor: pointer;
+    border-radius: 50%;
+    @include themed('box-shadow', 'iconshadow');
+    @include themed('filter', 'iconinvert');
+    @include all_transition_durations;
+    @include set_font_fam;
+
+    &:hover{
+        @include themed('filter', 'iconinverthighlight');
+        @include themed('-webkit-filter', 'iconinverthighlight');
+    }
+}
+
+//Desktop
+@media only screen and (min-width: 600px) {
+    .socailbtn {
+        width: 2pc;
+        margin: auto 0.5pc;
+    }
+}
+
+//Mobile
+@media only screen and (max-width: 600px) {
+    .socailbtn {
+        width: 2pc;
+        margin: 0.25pc;
+    }
+}
