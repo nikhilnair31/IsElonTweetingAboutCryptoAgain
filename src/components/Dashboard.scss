@@ -6,6 +6,7 @@
             @include set_font_fam;
             color: #f2cc93;
             font-weight: bolder;
+            word-wrap: break-word;
         }
         .subtext {
             font-weight: lighter;
@@ -25,7 +26,7 @@
                 @include set_font_fam;
                 text-align: center;
                 background: #2d2d2d;
-                color: #c9c9c9;
+                color: #f2cc93;
                 border: 0pc;
                 height: 5vh;
                 border-radius: 0.4pc;

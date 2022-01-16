@@ -6,6 +6,11 @@
     margin: 0.2pc;
     background-color: #f2cc93;
     @include set_font_fam;
+    @include all_transition_durations;
+    &:hover {
+        background: #2d2d2d;
+        color: #f2cc93;
+    }
 }
 
 //Desktop

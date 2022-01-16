@@ -3,6 +3,7 @@ import { AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import TimeButton from './TimeButton';
 import SocialButton from './SocialButton';
 import Post from "../helpers/post.js";
+import dayjs from "dayjs";
 import './Dashboard.scss';
 
 const Dashboard = () => {
@@ -25,6 +26,9 @@ const Dashboard = () => {
     }
     function findDateOnIndex(ind) {
         return cryptoState[ind].date
+    }
+    function formatDate(date) {
+        return dayjs(date).format("D MMM, YY")
     }
     function GetCryptoPrices() {
         console.log(`GetCryptoPrices`);
@@ -65,7 +69,7 @@ const Dashboard = () => {
             if (matches) {
                 return (
                     <div className="custom-tooltip">
-                        <p className="label">{`${payload[0].value} - ${label}`}</p>
+                        <p className="label">{`${payload[0].value} - ${formatDate(label)}`}</p>
                         <p className="label">{`${findTweetOnDate(label)}`}</p>
                     </div>
                 );
@@ -73,7 +77,7 @@ const Dashboard = () => {
             else {
                 return (
                     <div className="custom-tooltip">
-                        <p className="label">{`${payload[0].value} - ${findDateOnIndex(label)}`}</p>
+                        <p className="label">{`${payload[0].value} - ${formatDate(findDateOnIndex(label))}`}</p>
                         <p className="label">{`${findTweetOnDate(findDateOnIndex(label))}`}</p>
                     </div>
                 );
@@ -85,7 +89,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard">
             <div className="header">
-                <p className="title">cryptoMusk</p>
+                <p className="title">iselontweetingaboutcryptoagain?</p>
                 <h3 className="subtext">see the influence of the elon's tweets on crypto prices</h3>
                 <div className="crptofiat_container">
                     <input className="crptofiat_input" placeholder="dogecoin" onChange={handleCryptoNameChange}></input>
@@ -110,7 +114,7 @@ const Dashboard = () => {
                     </AreaChart>
                 }
                 {(!matches) &&
-                    <AreaChart className="main_chart" width={350} height={450} data={cryptoState} >
+                    <AreaChart className="main_chart" width={350} height={420} data={cryptoState} >
                         <defs>
                             <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
