@@ -10,6 +10,8 @@
     - [ ] Format tweet better
     - [ ] Check what robots.txt
         - [x] Check out React routers?
+* Lambda
+    - [ ] Fix the Twint Lambda. AWS Lambda Docker image works but doesn't have Git and base Python images have git but don't work. Alternative is using layers but firebase_admin + twint + numpy is more than the max 250 MB size limit.
 * Database
     - [ ] Apply proper rules in Firebase RTDB to not get spammed again
 * Other
