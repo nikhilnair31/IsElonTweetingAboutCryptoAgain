@@ -4,6 +4,7 @@ import './TimeButton.scss';
 const TimeButton = (props) => {
     function setTimeSpan() {
         console.log(`setTimeSpan`);
+        props.settimespanChanged(true);
         if(props.button_text === "1 W")
             props.setTimeSpan(7);
         else if(props.button_text === "1 M")

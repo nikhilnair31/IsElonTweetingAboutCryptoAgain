@@ -7,6 +7,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
+    "site": "iselontweetingaboutcryptoagain",
     "public": "build",
     "ignore": [
       "firebase.json",
