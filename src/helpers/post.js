@@ -2,23 +2,6 @@ import { dbref } from "./firebase";
 import dayjs from "dayjs";
 
 export default {
-    MergeArr: (tweetArr, cryptoArr) => {
-        console.log(tweetArr.length, tweetArr[0]);
-        console.log(cryptoArr.length, cryptoArr[0]);
-
-        let mergedArr = []
-        cryptoArr.forEach(element => {
-            let obj;
-            if(tweetArr.find(o => o.date === element.date) === undefined) 
-                obj = {tweet: ""}
-            else
-                obj = tweetArr.find(o => o.date === element.date)
-            console.log('obj: ', obj);
-            mergedArr.push({date: element.date, price: element.price, tweet: obj.tweet});
-        });
-        console.log(mergedArr.length, mergedArr[0]);
-        return mergedArr;
-    },
     GetCryptoPrices: async (coin, fiat, days) => {
         try {
             let cryptoArr = []
@@ -39,15 +22,17 @@ export default {
     },
     GetElonTweets: async () => {
         try {
+            console.log(`tweetArr = []`);
             let tweetArr = []
             var refx = dbref.ref("tweets")
             refx.on("value", function(snapshot) {
+                console.log(snapshot);
                 snapshot.forEach((childSnapshot) => {
-                    // console.log(childSnapshot.val());
                     tweetArr.push(childSnapshot.val());
                 });
-                console.log(tweetArr[0]);
+                console.log('tweetArr[0]', tweetArr[0]);
             });
+            console.log(`return tweetArr`);
             return { tweetArr };
         } 
         catch (e) {

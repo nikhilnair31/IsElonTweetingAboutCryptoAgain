@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { ScatterChart , Scatter, LineChart, Line, ComposedChart, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import TimeButton from './TimeButton';
 import SocialButton from './SocialButton';
 import Post from "../helpers/post.js";
@@ -10,10 +10,9 @@ const Dashboard = () => {
     const [cryptoname, setcryptoName] = useState('dogecoin');
     const [fiatname, setfiatname] = useState('inr');
     const [timeSpan, setTimeSpan] = useState(365);
-    const [timespanChanged, settimespanChanged] = useState(false);
     
-    const [pricesArray, setPricesArray] = useState([]);
-    const [tweetsArray, setTweetsArray] = useState([]);
+    const [cryptoState, setCryptoState] = useState([]);
+    const [tweetState, setTweetState] = useState([]);
     const [cryptoLoadDone, setcryptoLoadDone] = useState(false);
     const [tweetLoadDone, settweetLoadDone] = useState(false);
 
@@ -21,23 +20,18 @@ const Dashboard = () => {
     const handleFiatNameChange = event => { setfiatname(event.target.value); };
 
     function findTweetOnDate(date) {
-        if(tweetsArray.find(o => o.date === date) === undefined) 
-            return ""
-        else
-            return tweetsArray.find(o => o.date === date).tweet
+        if(tweetState.find(o => o.date === date) === undefined) return ""
+        else return tweetState.find(o => o.date === date).tweet
     }
-    function GetAllData() {
-        console.log(`GetAllData`);
-        GetCryptoPrices();
-        GetElonTweets();
+    function findDateOnIndex(ind) {
+        return cryptoState[ind].date
     }
     function GetCryptoPrices() {
         console.log(`GetCryptoPrices`);
         Post.GetCryptoPrices(cryptoname, fiatname, timeSpan)
             .then((res) => {
-                console.log(`got GetCryptoPrices results`);
+                setCryptoState(res.cryptoArr);
                 setcryptoLoadDone(true);
-                setPricesArray(res.cryptoArr);
             })
             .catch((err) => {
                 console.log(err);
@@ -47,9 +41,10 @@ const Dashboard = () => {
         console.log(`GetElonTweets`);
         Post.GetElonTweets()
             .then((res) => {
-                console.log(`got GetElonTweets results`);
+                if(res.tweetArr !== undefined) {
+                    setTweetState(res.tweetArr);
+                }
                 settweetLoadDone(true);
-                setTweetsArray(res.tweetArr);
             })
             .catch((err) => {
                 console.log(err);
@@ -66,13 +61,23 @@ const Dashboard = () => {
     }, [timeSpan])
 
     const CustomTooltip = ({ active, payload, label }) => {
-        if (active) {
-            return (
-                <div className="custom-tooltip">
-                    {payload !== null && <p className="label">{`${payload[0].value} - ${label}`}</p>}
-                    {payload !== null && <p className="label">{`${findTweetOnDate(label)}`}</p>}
-                </div>
-            );
+        if (active && payload !== null) {
+            if (matches) {
+                return (
+                    <div className="custom-tooltip">
+                        <p className="label">{`${payload[0].value} - ${label}`}</p>
+                        <p className="label">{`${findTweetOnDate(label)}`}</p>
+                    </div>
+                );
+            }
+            else {
+                return (
+                    <div className="custom-tooltip">
+                        <p className="label">{`${payload[0].value} - ${findDateOnIndex(label)}`}</p>
+                        <p className="label">{`${findTweetOnDate(findDateOnIndex(label))}`}</p>
+                    </div>
+                );
+            }
         }
         return null;
     };
@@ -85,12 +90,12 @@ const Dashboard = () => {
                 <div className="crptofiat_container">
                     <input className="crptofiat_input" placeholder="dogecoin" onChange={handleCryptoNameChange}></input>
                     <input className="crptofiat_input" placeholder="inr" onChange={handleFiatNameChange}></input>
-                    <button className="crptofiat_button" onClick={() => GetAllData()}>Show</button>
+                    <button className="crptofiat_button" onClick={() => GetCryptoPrices()}>Show</button>
                 </div>
             </div>
             <div className='main_chart_container' >
                 {(matches) &&
-                    <AreaChart className="main_chart" width={1600} height={550} data={pricesArray} >
+                    <AreaChart className="main_chart" width={1600} height={550} data={cryptoState} >
                         <defs>
                             <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
@@ -105,7 +110,7 @@ const Dashboard = () => {
                     </AreaChart>
                 }
                 {(!matches) &&
-                    <AreaChart className="main_chart" width={350} height={450} data={pricesArray} >
+                    <AreaChart className="main_chart" width={350} height={450} data={cryptoState} >
                         <defs>
                             <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
@@ -118,11 +123,11 @@ const Dashboard = () => {
                 }
             </div>
             <div className="timebutton_container">
-                <TimeButton button_text="1 W" setTimeSpan={setTimeSpan} settimespanChanged={settimespanChanged} />
-                <TimeButton button_text="1 M" setTimeSpan={setTimeSpan} settimespanChanged={settimespanChanged} />
-                <TimeButton button_text="1 Y" setTimeSpan={setTimeSpan} settimespanChanged={settimespanChanged} />
-                <TimeButton button_text="3 Y" setTimeSpan={setTimeSpan} settimespanChanged={settimespanChanged} />
-                <TimeButton button_text="5 Y" setTimeSpan={setTimeSpan} settimespanChanged={settimespanChanged} />
+                <TimeButton button_text="1 W" setTimeSpan={setTimeSpan} />
+                <TimeButton button_text="1 M" setTimeSpan={setTimeSpan} />
+                <TimeButton button_text="1 Y" setTimeSpan={setTimeSpan} />
+                <TimeButton button_text="3 Y" setTimeSpan={setTimeSpan} />
+                <TimeButton button_text="5 Y" setTimeSpan={setTimeSpan} />
             </div>
             <div className="socials_container">
                 <SocialButton button_image="./images/twitter_icon.png" alt="Twitter" link="https://twitter.com/_silhouettte_"/>
