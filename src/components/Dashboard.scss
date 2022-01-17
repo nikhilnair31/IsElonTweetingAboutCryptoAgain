@@ -41,17 +41,22 @@
             }
         }
     }
-}
-
-.custom-tooltip {
-    @include set_font_fam;
-    background-color: "black";
-    border-radius: 3pc;
-
-    .label {
-        margin: 1pc 2pc 1pc 2pc;
-        font-size: '0.9rem';
-        color: "white";
+    .custom_tooltip {
+        border-radius: 1pc;
+        max-width: 20pc;
+        background-color: "black";
+        @include set_font_fam;
+        .label {
+            color: "white";
+            font-weight: bolder;
+            margin: 1pc;
+            font-size: 0.9rem;
+        }
+        .tweet {
+            color: "white";
+            margin: 1pc;
+            font-size: 0.9rem;
+        }
     }
 }
 

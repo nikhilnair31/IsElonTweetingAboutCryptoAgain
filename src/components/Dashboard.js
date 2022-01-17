@@ -68,17 +68,17 @@ const Dashboard = () => {
         if (active && payload !== null) {
             if (matches) {
                 return (
-                    <div className="custom-tooltip">
+                    <div className="custom_tooltip">
                         <p className="label">{`${payload[0].value} - ${formatDate(label)}`}</p>
-                        <p className="label">{`${findTweetOnDate(label)}`}</p>
+                        <p className="tweet">{`${findTweetOnDate(label)}`}</p>
                     </div>
                 );
             }
             else {
                 return (
-                    <div className="custom-tooltip">
+                    <div className="custom_tooltip">
                         <p className="label">{`${payload[0].value} - ${formatDate(findDateOnIndex(label))}`}</p>
-                        <p className="label">{`${findTweetOnDate(findDateOnIndex(label))}`}</p>
+                        <p className="tweet">{`${findTweetOnDate(findDateOnIndex(label))}`}</p>
                     </div>
                 );
             }
