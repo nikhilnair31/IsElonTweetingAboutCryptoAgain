@@ -4,11 +4,12 @@
     border-width: 0pc;
     border-radius: 0.4pc;
     margin: 0.2pc;
-    background-color: #f2cc93;
+    color: #f2cc93;
+    background-color: #2d2d2d;
     @include set_font_fam;
     @include all_transition_durations;
     &:hover {
-        background: #2d2d2d;
+        background: #8884d8;
         color: #f2cc93;
     }
 }

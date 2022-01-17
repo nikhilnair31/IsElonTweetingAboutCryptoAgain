@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import TimeButton from './TimeButton';
 import SocialButton from './SocialButton';
 import Post from "../helpers/post.js";
@@ -99,31 +99,35 @@ const Dashboard = () => {
             </div>
             <div className='main_chart_container' >
                 {(matches) &&
-                    <AreaChart className="main_chart" width={1600} height={550} data={cryptoState} >
-                        <defs>
-                            <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
-                                <stop offset="100%" stopColor="#8884d8" stopOpacity={0.1} />
-                            </linearGradient>
-                        </defs>
-                        <CartesianGrid vertical={false} stroke="#3b3b3b" strokeDasharray="1 1" />
-                        <XAxis dataKey="date" style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
-                        <YAxis style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
-                        <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "3pc", fontSize: '1rem'}}/>
-                        <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" />
-                    </AreaChart>
+                    <ResponsiveContainer className="resp_chart" width="97%" height="99.9%">
+                        <AreaChart className="main_chart" width={1450} height={380} data={cryptoState} >
+                            <defs>
+                                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
+                                    <stop offset="100%" stopColor="#8884d8" stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid vertical={false} stroke="#3b3b3b" strokeDasharray="1 1" />
+                            <XAxis dataKey="date" style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
+                            <YAxis style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
+                            <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "3pc", fontSize: '1rem'}}/>
+                            <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" />
+                        </AreaChart>
+                    </ResponsiveContainer>
                 }
                 {(!matches) &&
-                    <AreaChart className="main_chart" width={350} height={420} data={cryptoState} >
-                        <defs>
-                            <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
-                                <stop offset="100%" stopColor="#8884d8" stopOpacity={0.1} />
-                            </linearGradient>
-                        </defs>
-                        <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "3pc", fontSize: '1rem'}}/>
-                        <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" />
-                    </AreaChart>
+                    <ResponsiveContainer className="resp_chart" width="90%" height="99.9%">
+                        <AreaChart className="main_chart" width={350} height={420} data={cryptoState} >
+                            <defs>
+                                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
+                                    <stop offset="100%" stopColor="#8884d8" stopOpacity={0.1} />
+                                </linearGradient>
+                            </defs>
+                            <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "3pc", fontSize: '1rem'}}/>
+                            <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" />
+                        </AreaChart>
+                    </ResponsiveContainer>
                 }
             </div>
             <div className="timebutton_container">

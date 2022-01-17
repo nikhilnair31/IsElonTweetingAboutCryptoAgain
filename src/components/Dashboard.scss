@@ -2,6 +2,8 @@
 
 .dashboard {
     .header {
+        display: flex;
+        flex-direction: column;
         .title {
             @include set_font_fam;
             color: #f2cc93;
@@ -25,15 +27,16 @@
             .crptofiat_button{
                 @include set_font_fam;
                 text-align: center;
+                font-weight: bolder;
                 background: #2d2d2d;
-                color: #f2cc93;
+                color: #8884d8;
                 border: 0pc;
                 height: 5vh;
                 border-radius: 0.4pc;
                 @include all_transition_durations;
                 &:hover {
-                    background: #f2cc93;
-                    color: #2d2d2d;
+                    background: #8884d8;
+                    color: #f2cc93;
                 }
             }
         }
@@ -59,14 +62,14 @@
             margin: 1pc;
             .title {
                 font-size: 2em;
-                margin: 1.5pc;
+                margin: 0.5pc 1pc;
             }
             .subtext {
                 font-size: 1em;
-                margin: 1.5pc;
+                margin: 0.5pc 1pc;
             }
             .crptofiat_container {
-                margin: 1pc;
+                margin: 0.5pc;
                 .crptofiat_input{
                     width: 10vw;
                     padding: 0pc;
@@ -82,7 +85,8 @@
     }
     .main_chart_container {
         margin-top: 1.5pc;
-        margin-bottom: 1.5pc;
+        margin-bottom: 1pc;
+        height: 25pc;    
     }
     .timebutton_container {
         display: flex;
@@ -115,13 +119,13 @@
                 display: flex;
                 justify-content: space-between;
                 .crptofiat_input{
-                    width: 26vw;
+                    width: 28vw;
                     padding: 0pc;
                     margin: 0pc 0.1pc;
                     font-size: 0.8pc;
                 }
                 .crptofiat_button{
-                    width: 26vw;
+                    width: 28vw;
                     padding: 0pc;
                     margin: 0pc 0.1pc;
                     font-size: 0.8pc;
@@ -134,11 +138,15 @@
         justify-content: center;
         margin-top: 1.5pc;
         margin-bottom: 1.5pc;
+        height: 25pc;    
     }
     .timebutton_container {
         display: flex;
         justify-content: center;
-        margin: 1pc;
+        margin: 0.5pc 1.5pc 0.5pc 1.5pc;
+        padding: 0.5pc 0.5pc 0.5pc 0.5pc;
+        background-color: #2d2d2d;
+        border-radius: 0.5pc;
     }
     .socials_container {
         display: flex;
