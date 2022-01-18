@@ -28,6 +28,7 @@
                 border-radius: 0.4pc;
             }
             .crptofiat_button{
+                cursor: pointer;
                 @include set_font_fam;
                 text-align: center;
                 font-weight: bolder;

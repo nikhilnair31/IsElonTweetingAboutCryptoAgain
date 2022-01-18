@@ -84,6 +84,7 @@ const Dashboard = () => {
 
     const CustomTooltip = ({ active, payload, label }) => {
         let muskpflink = 'https://pbs.twimg.com/profile_images/1474910968157249536/FS8-70Ie_400x400.jpg';
+        let getCurrSymbol = currency_symbols[fiatname.toUpperCase()]!==undefined?currency_symbols[fiatname.toUpperCase()]:'';
         if (active && payload !== null) {
             if (matches) {
                 let formattedDate = formatDate(label);
@@ -92,7 +93,7 @@ const Dashboard = () => {
                     <div className="custom_tooltip">
                         <div className="custom_tooltip" style={{display: 'flex'}}>
                             {tweetOnDate !== '' && <input className="elon_pfp" type="image" src={muskpflink} alt='elon_pfp?' />}
-                            <p className="label">{`${currency_symbols[fiatname.toUpperCase()]} ${payload[0].value} - ${formattedDate}`}</p>
+                            <p className="label">{`${getCurrSymbol} ${payload[0].value} - ${formattedDate}`}</p>
                             {/* {tweetOnDate !== '' && <p className="label">Elon</p>} */}
                         </div>
                         {tweetOnDate && <p className="tweet">{`${tweetOnDate}`}</p>}
@@ -106,7 +107,7 @@ const Dashboard = () => {
                     <div className="custom_tooltip">
                         <div className="custom_tooltip" style={{display: 'flex'}}>
                             {tweetOnDate !== '' && <input className="elon_pfp" type="image" src={muskpflink} alt='elon_pfp?' />}
-                            <p className="label">{`${currency_symbols[fiatname.toUpperCase()]} ${payload[0].value} - ${formattedDate}`}</p>
+                            <p className="label">{`${getCurrSymbol} ${payload[0].value} - ${formattedDate}`}</p>
                             {/* {tweetOnDate !== '' && <p className="label">Elon</p>} */}
                         </div>
                         {tweetOnDate && <p className="tweet">{`${tweetOnDate}`}</p>}
