@@ -89,7 +89,10 @@ const Dashboard = () => {
     return (
         <div className="dashboard">
             <div className="header">
-                <p className="title">iselontweetingaboutcryptoagain?</p>
+                <div className="title">
+                    <input className="title_img" type="image" src='./favicon2.png' alt='iselontweetingaboutcryptoagain?' />
+                    <p className="title_label">iselontweetingaboutcryptoagain?</p>
+                </div>
                 <h3 className="subtext">see the influence of the elon's tweets on crypto prices</h3>
                 <div className="crptofiat_container">
                     <input className="crptofiat_input" placeholder="dogecoin" onChange={handleCryptoNameChange}></input>
@@ -138,9 +141,9 @@ const Dashboard = () => {
                 <TimeButton button_text="5 Y" setTimeSpan={setTimeSpan} />
             </div>
             <div className="socials_container">
-                <SocialButton button_image="./images/twitter_icon.png" alt="Twitter" link="https://twitter.com/_silhouettte_"/>
-                <SocialButton button_image="./images/site_icon.png" alt="Personal Site" link="https://nikhil-nair.web.app/"/>
-                <SocialButton button_image="./images/instagram_icon.png" alt="Instagram" link="https://www.instagram.com/_nikhilnair_/"/>
+                <SocialButton socialname='Twitter' button_image="./images/twitter_icon.png" alt="Twitter" link="https://twitter.com/_silhouettte_"/>
+                <SocialButton socialname='Personal Site' button_image="./images/site_icon.png" alt="Personal Site" link="https://nikhil-nair.web.app/"/>
+                <SocialButton socialname='Instagram' button_image="./images/instagram_icon.png" alt="Instagram" link="https://www.instagram.com/_nikhilnair_/"/>
             </div>
         </div>
     );

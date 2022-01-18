@@ -2,30 +2,49 @@
 
 .socailbtn {
     cursor: pointer;
-    border-radius: 50%;
-    @include themed('box-shadow', 'iconshadow');
-    @include themed('filter', 'iconinvert');
-    @include all_transition_durations;
+    display: flex;
+    justify-content: start;
+    color: #f2cc93;
+    background-color: #2d2d2d;
     @include set_font_fam;
-
-    &:hover{
-        @include themed('filter', 'iconinverthighlight');
-        @include themed('-webkit-filter', 'iconinverthighlight');
+    @include all_transition_durations;
+    .socailbtn_img {
+        cursor: pointer;
+        margin-left: 0.5pc;
+    }
+    &:hover {
+        background: #8884d8;
+        color: #f2cc93;
     }
 }
 
 //Desktop
 @media only screen and (min-width: 600px) {
     .socailbtn {
-        width: 2pc;
-        margin: auto 0.5pc;
+        margin: 0pc 0.2pc;
+        border-radius: 0.4pc;
+        .socailbtn_img {
+            width: 1.5pc;
+            margin: auto 0.5pc;
+        }
+        .socailbtn_label {
+            margin-right: 1pc;
+        }
     }
 }
 
 //Mobile
 @media only screen and (max-width: 600px) {
     .socailbtn {
-        width: 2pc;
-        margin: 0.25pc;
+        margin: 0pc 0.2pc;
+        border-radius: 0.4pc;
+        .socailbtn_img {
+            width: 1.5pc;
+            padding: 0.75pc;
+            margin: 0pc;
+        }
+        .socailbtn_label {
+            display: none;
+        }
     }
 }

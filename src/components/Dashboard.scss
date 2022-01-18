@@ -5,10 +5,13 @@
         display: flex;
         flex-direction: column;
         .title {
-            @include set_font_fam;
-            color: #f2cc93;
-            font-weight: bolder;
-            word-wrap: break-word;
+            display: flex;
+            flex-direction: row;
+            .title_label {
+                @include set_font_fam;
+                color: #f2cc93;
+                font-weight: bolder;
+            }
         }
         .subtext {
             font-weight: lighter;
@@ -68,6 +71,9 @@
             .title {
                 font-size: 2em;
                 margin: 0.5pc 1pc;
+                .title_label {
+                    margin: 1pc;
+                }
             }
             .subtext {
                 font-size: 1em;
@@ -96,12 +102,12 @@
     .timebutton_container {
         display: flex;
         justify-content: center;
-        padding: 0.5pc;
+        padding: 0.25pc;
     }
     .socials_container {
         display: flex;
         justify-content: center;
-        padding: 0.5pc;
+        padding: 0.25pc;
     }
 }
 
@@ -114,6 +120,15 @@
             .title {
                 font-size: 2em;
                 margin: 0pc;
+                word-wrap: break-word;
+                .title_img {
+                    display: none;
+                }
+                .title_label {
+                    margin: 0pc;
+                    max-width: 85vw;
+                    word-wrap: break-word;
+                }
             }
             .subtext {
                 font-size: 1em;

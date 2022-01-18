@@ -8,7 +8,10 @@ const SocialButton = (props) => {
     }
 
     return (
-        <input className="socailbtn" type="image" src={props.button_image} alt={props.alt} onClick={() => openLink(props.link)} />
+        <div className="socailbtn"  onClick={() => openLink(props.link)} >
+            <input className="socailbtn_img" type="image" src={props.button_image} alt={props.alt} />
+            <p className="socailbtn_label">{props.socialname}</p>
+        </div>
     );
 }
 
