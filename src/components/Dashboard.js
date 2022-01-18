@@ -17,6 +17,24 @@ const Dashboard = () => {
     const [cryptoLoadDone, setcryptoLoadDone] = useState(false);
     const [tweetLoadDone, settweetLoadDone] = useState(false);
 
+    var currency_symbols = {
+        'USD': '$', // US Dollar
+        'EUR': '€', // Euro
+        'CRC': '₡', // Costa Rican Colón
+        'GBP': '£', // British Pound Sterling
+        'ILS': '₪', // Israeli New Sheqel
+        'INR': '₹', // Indian Rupee
+        'JPY': '¥', // Japanese Yen
+        'KRW': '₩', // South Korean Won
+        'NGN': '₦', // Nigerian Naira
+        'PHP': '₱', // Philippine Peso
+        'PLN': 'zł', // Polish Zloty
+        'PYG': '₲', // Paraguayan Guarani
+        'THB': '฿', // Thai Baht
+        'UAH': '₴', // Ukrainian Hryvnia
+        'VND': '₫', // Vietnamese Dong
+    };
+
     const handleCryptoNameChange = event => { setcryptoName(event.target.value); };
     const handleFiatNameChange = event => { setfiatname(event.target.value); };
 
@@ -65,20 +83,33 @@ const Dashboard = () => {
     }, [timeSpan])
 
     const CustomTooltip = ({ active, payload, label }) => {
+        let muskpflink = 'https://pbs.twimg.com/profile_images/1474910968157249536/FS8-70Ie_400x400.jpg';
         if (active && payload !== null) {
             if (matches) {
+                let formattedDate = formatDate(label);
+                let tweetOnDate = findTweetOnDate(label);
                 return (
                     <div className="custom_tooltip">
-                        <p className="label">{`${payload[0].value} - ${formatDate(label)}`}</p>
-                        <p className="tweet">{`${findTweetOnDate(label)}`}</p>
+                        <div className="custom_tooltip" style={{display: 'flex'}}>
+                            {tweetOnDate !== '' && <input className="elon_pfp" type="image" src={muskpflink} alt='elon_pfp?' />}
+                            <p className="label">{`${currency_symbols[fiatname.toUpperCase()]} ${payload[0].value} - ${formattedDate}`}</p>
+                            {/* {tweetOnDate !== '' && <p className="label">Elon</p>} */}
+                        </div>
+                        {tweetOnDate && <p className="tweet">{`${tweetOnDate}`}</p>}
                     </div>
                 );
             }
             else {
+                let formattedDate = formatDate(findDateOnIndex(label));
+                let tweetOnDate = findTweetOnDate(findDateOnIndex(label));
                 return (
                     <div className="custom_tooltip">
-                        <p className="label">{`${payload[0].value} - ${formatDate(findDateOnIndex(label))}`}</p>
-                        <p className="tweet">{`${findTweetOnDate(findDateOnIndex(label))}`}</p>
+                        <div className="custom_tooltip" style={{display: 'flex'}}>
+                            {tweetOnDate !== '' && <input className="elon_pfp" type="image" src={muskpflink} alt='elon_pfp?' />}
+                            <p className="label">{`${currency_symbols[fiatname.toUpperCase()]} ${payload[0].value} - ${formattedDate}`}</p>
+                            {/* {tweetOnDate !== '' && <p className="label">Elon</p>} */}
+                        </div>
+                        {tweetOnDate && <p className="tweet">{`${tweetOnDate}`}</p>}
                     </div>
                 );
             }
@@ -113,7 +144,7 @@ const Dashboard = () => {
                             <CartesianGrid vertical={false} stroke="#3b3b3b" strokeDasharray="1 1" />
                             <XAxis dataKey="date" style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
                             <YAxis style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
-                            <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "3pc", fontSize: '1rem'}}/>
+                            <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "1pc", fontSize: '1rem'}}/>
                             <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" />
                         </AreaChart>
                     </ResponsiveContainer>
@@ -127,7 +158,7 @@ const Dashboard = () => {
                                     <stop offset="100%" stopColor="#8884d8" stopOpacity={0.1} />
                                 </linearGradient>
                             </defs>
-                            <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "3pc", fontSize: '1rem'}}/>
+                            <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "1pc", fontSize: '1rem'}}/>
                             <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" />
                         </AreaChart>
                     </ResponsiveContainer>

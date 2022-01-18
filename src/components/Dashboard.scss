@@ -49,6 +49,10 @@
         max-width: 20pc;
         background-color: "black";
         @include set_font_fam;
+        .elon_pfp{
+            max-width: 3pc;
+            border-radius: 1pc 0pc 1pc 0pc;
+        }
         .label {
             color: "white";
             font-weight: bolder;
