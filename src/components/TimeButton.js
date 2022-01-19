@@ -7,15 +7,15 @@ const TimeButton = (props) => {
         if(props.button_text === "1 M"){
             props.setTimeSpan(30);
             props.setinterval('daily');
-            props.setpointRadius(10);
+            props.setpointRadius(9);
+        }
+        if(props.button_text === "6 M"){
+            props.setTimeSpan(30*6);
+            props.setinterval('daily');
+            props.setpointRadius(7);
         }
         else if(props.button_text === "1 Y"){
             props.setTimeSpan(1*365);
-            props.setinterval('daily');
-            props.setpointRadius(6);
-        }
-        else if(props.button_text === "3 Y"){
-            props.setTimeSpan(3*365);
             props.setinterval('daily');
             props.setpointRadius(5);
         }

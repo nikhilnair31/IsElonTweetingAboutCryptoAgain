@@ -100,7 +100,7 @@ const Dashboard = () => {
             GetElonTweets();
         if(!tweetcryptoMergeDone && cryptoLoadDone && tweetLoadDone)
             MergeCryptoAndTweets();
-    }, [cryptoLoadDone, tweetLoadDone, tweetState, timeSpan])
+    }, [tweetcryptoMergeDone, cryptoLoadDone, tweetLoadDone, tweetState, timeSpan])
 
     const CustomTooltip = ({ active, payload, label }) => {
         let muskpflink = 'https://pbs.twimg.com/profile_images/1474910968157249536/FS8-70Ie_400x400.jpg';
@@ -180,7 +180,7 @@ const Dashboard = () => {
                             <XAxis dataKey="date" style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
                             <YAxis style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
                             <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "1pc", fontSize: '1rem'}}/>
-                            <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" dot={<CustomizedDot />} />
+                            <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" dot={ <CustomizedDot />} />
                         </ComposedChart>
                     </ResponsiveContainer>
                 }
@@ -201,8 +201,8 @@ const Dashboard = () => {
             </div>
             <div className="timebutton_container">
                 <TimeButton button_text="1 M" setTimeSpan={setTimeSpan} setinterval={setinterval} setpointRadius={setpointRadius} />
+                <TimeButton button_text="6 M" setTimeSpan={setTimeSpan} setinterval={setinterval} setpointRadius={setpointRadius}/>
                 <TimeButton button_text="1 Y" setTimeSpan={setTimeSpan} setinterval={setinterval} setpointRadius={setpointRadius}/>
-                <TimeButton button_text="3 Y" setTimeSpan={setTimeSpan} setinterval={setinterval} setpointRadius={setpointRadius}/>
             </div>
             <div className="socials_container">
                 <SocialButton socialname='Twitter' button_image="./images/twitter_icon.png" alt="Twitter" link="https://twitter.com/_silhouettte_"/>
