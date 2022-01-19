@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { ResponsiveContainer, ComposedChart, AreaChart, Area, Line, Scatter, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import TimeButton from './TimeButton';
 import SocialButton from './SocialButton';
 import Post from "../helpers/post.js";
@@ -8,12 +8,15 @@ import './Dashboard.scss';
 
 const Dashboard = () => {
     const [matches, setMatches] = useState( window.matchMedia("(min-width: 768px)").matches )
+    const [pointRadius, setpointRadius] = useState(10);
     const [cryptoname, setcryptoName] = useState('dogecoin');
     const [fiatname, setfiatname] = useState('inr');
     const [timeSpan, setTimeSpan] = useState(365);
+    const [interval, setinterval] = useState('daily');
     
     const [cryptoState, setCryptoState] = useState([]);
     const [tweetState, setTweetState] = useState([]);
+    const [tweetcryptoMergeDone, settweetcryptoMergeDone] = useState(false);
     const [cryptoLoadDone, setcryptoLoadDone] = useState(false);
     const [tweetLoadDone, settweetLoadDone] = useState(false);
 
@@ -48,9 +51,24 @@ const Dashboard = () => {
     function formatDate(date) {
         return dayjs(date).format("D MMM, YY")
     }
+    function MergeCryptoAndTweets() {
+        console.log(`MergeCryptoAndTweets`);
+        let mergeState = cryptoState;
+        console.log('pre cryptoState: ', mergeState);
+        console.log('pre tweetState: ', tweetState);
+        mergeState.forEach(element => {
+            let tweetOnDate = findTweetOnDate(element.date);
+            // console.log('tweetOnDate: ', tweetOnDate);
+            element.tweet = tweetOnDate;
+        });
+        console.log('post mergeState: ', mergeState);
+        console.log('post tweetState: ', tweetState);
+        setCryptoState(mergeState);
+        settweetcryptoMergeDone(true);
+    }
     function GetCryptoPrices() {
         console.log(`GetCryptoPrices`);
-        Post.GetCryptoPrices(cryptoname, fiatname, timeSpan)
+        Post.GetCryptoPrices(cryptoname, fiatname, timeSpan, interval)
             .then((res) => {
                 setCryptoState(res.cryptoArr);
                 setcryptoLoadDone(true);
@@ -76,18 +94,21 @@ const Dashboard = () => {
     useEffect(() => {
         console.log(`useEffect`);
         window.matchMedia("(min-width: 600px)").addEventListener('change', e => setMatches( e.matches ));
-        if(!tweetLoadDone)
-            GetElonTweets();
         if(!cryptoLoadDone || timeSpan)
             GetCryptoPrices();
-    }, [timeSpan])
+        if(!tweetLoadDone)
+            GetElonTweets();
+        if(!tweetcryptoMergeDone && cryptoLoadDone && tweetLoadDone)
+            MergeCryptoAndTweets();
+    }, [cryptoLoadDone, tweetLoadDone, tweetState, timeSpan])
 
     const CustomTooltip = ({ active, payload, label }) => {
         let muskpflink = 'https://pbs.twimg.com/profile_images/1474910968157249536/FS8-70Ie_400x400.jpg';
         let getCurrSymbol = currency_symbols[fiatname.toUpperCase()]!==undefined?currency_symbols[fiatname.toUpperCase()]:'';
         if (active && payload !== null) {
             if (matches) {
-                let formattedDate = formatDate(label);
+                // let formattedDate = formatDate(label);
+                let formattedDate = label;
                 let tweetOnDate = findTweetOnDate(label);
                 return (
                     <div className="custom_tooltip">
@@ -117,6 +138,19 @@ const Dashboard = () => {
         }
         return null;
     };
+    const CustomizedDot = (props) => {
+        const { cx, cy, stroke, payload, value } = props;
+        if (findTweetOnDate(payload.date) !== '') {
+            return (
+                <svg x={cx-pointRadius} y={cy-pointRadius} width={300} height={300} viewBox="0 0 300 300">
+                    <circle cx={pointRadius} cy={pointRadius} r={pointRadius} fill="#f2cc93" />
+                </svg>
+            );
+        }
+        return (
+            null
+        );
+    };
 
     return (
         <div className="dashboard">
@@ -135,7 +169,7 @@ const Dashboard = () => {
             <div className='main_chart_container' >
                 {(matches) &&
                     <ResponsiveContainer className="resp_chart" width="97%" height="99.9%">
-                        <AreaChart className="main_chart" width={1450} height={380} data={cryptoState} >
+                        <ComposedChart className="main_chart" width={1450} height={380} data={cryptoState} >
                             <defs>
                                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
@@ -146,13 +180,13 @@ const Dashboard = () => {
                             <XAxis dataKey="date" style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
                             <YAxis style={{ fontFamily: 'Space Grotesk', fontSize: '0.9rem',}}/>
                             <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "1pc", fontSize: '1rem'}}/>
-                            <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" />
-                        </AreaChart>
+                            <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" dot={<CustomizedDot />} />
+                        </ComposedChart>
                     </ResponsiveContainer>
                 }
                 {(!matches) &&
                     <ResponsiveContainer className="resp_chart" width="90%" height="99.9%">
-                        <AreaChart className="main_chart" width={350} height={420} data={cryptoState} >
+                        <ComposedChart className="main_chart" width={350} height={420} data={cryptoState} >
                             <defs>
                                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="40%" stopColor="#8884d8" stopOpacity={1} />
@@ -160,17 +194,15 @@ const Dashboard = () => {
                                 </linearGradient>
                             </defs>
                             <Tooltip  content={<CustomTooltip />} wrapperStyle={{backgroundColor: "#f2cc93", color: "black", borderRadius: "1pc", fontSize: '1rem'}}/>
-                            <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" />
-                        </AreaChart>
+                            <Area type="monotone" dataKey="price" stroke="#8884d8" fill="url(#colorValue)" dot={<CustomizedDot />} />
+                        </ComposedChart>
                     </ResponsiveContainer>
                 }
             </div>
             <div className="timebutton_container">
-                <TimeButton button_text="1 W" setTimeSpan={setTimeSpan} />
-                <TimeButton button_text="1 M" setTimeSpan={setTimeSpan} />
-                <TimeButton button_text="1 Y" setTimeSpan={setTimeSpan} />
-                <TimeButton button_text="3 Y" setTimeSpan={setTimeSpan} />
-                <TimeButton button_text="5 Y" setTimeSpan={setTimeSpan} />
+                <TimeButton button_text="1 M" setTimeSpan={setTimeSpan} setinterval={setinterval} setpointRadius={setpointRadius} />
+                <TimeButton button_text="1 Y" setTimeSpan={setTimeSpan} setinterval={setinterval} setpointRadius={setpointRadius}/>
+                <TimeButton button_text="3 Y" setTimeSpan={setTimeSpan} setinterval={setinterval} setpointRadius={setpointRadius}/>
             </div>
             <div className="socials_container">
                 <SocialButton socialname='Twitter' button_image="./images/twitter_icon.png" alt="Twitter" link="https://twitter.com/_silhouettte_"/>

@@ -3,7 +3,7 @@
 .socailbtn {
     cursor: pointer;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     color: #f2cc93;
     background-color: #2d2d2d;
     @include set_font_fam;
