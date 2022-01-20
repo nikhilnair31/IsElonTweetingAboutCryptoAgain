@@ -53,7 +53,7 @@ const Dashboard = () => {
         return dayjs(date).format("D MMM, YY")
     }
     function MergeCryptoAndTweets() {
-        console.log(`MergeCryptoAndTweets`);
+        // console.log(`MergeCryptoAndTweets`);
         let mergeState = cryptoState;
         mergeState.forEach(element => {
             let tweetOnDate = findTweetOnDate(element.date);
@@ -64,7 +64,7 @@ const Dashboard = () => {
         settweetcryptoMergeDone(true);
     }
     function GetCryptoPrices() {
-        console.log(`GetCryptoPrices`);
+        // console.log(`GetCryptoPrices`);
         Post.GetCryptoPrices(cryptoname, fiatname, timeSpan, interval)
             .then((res) => {
                 setCryptoState(res.cryptoArr);
@@ -75,7 +75,7 @@ const Dashboard = () => {
         });
     }
     function GetElonTweets() {
-        console.log(`GetElonTweets`);
+        // console.log(`GetElonTweets`);
         Post.GetElonTweets()
             .then((res) => {
                 if(res.tweetArr !== undefined) {
@@ -89,8 +89,8 @@ const Dashboard = () => {
     }
 
     useLayoutEffect (() => {
-        console.log('cryptoState', cryptoState);
-        console.log('tweetState', tweetState);
+        // console.log('cryptoState', cryptoState);
+        // console.log('tweetState', tweetState);
         if(!tweetcryptoMergeDone && cryptoLoadDone && tweetLoadDone)
             MergeCryptoAndTweets();
     }, [tweetcryptoMergeDone, cryptoLoadDone, tweetLoadDone])
@@ -108,8 +108,8 @@ const Dashboard = () => {
         let getCurrSymbol = currency_symbols[fiatname.toUpperCase()]!==undefined?currency_symbols[fiatname.toUpperCase()]:'';
         if (active && payload !== null) {
             if (matches) {
-                // let formattedDate = formatDate(label);
-                let formattedDate = label;
+                let formattedDate = formatDate(label);
+                // let formattedDate = label;
                 let tweetOnDate = findTweetOnDate(label);
                 return (
                     <div className="custom_tooltip">
