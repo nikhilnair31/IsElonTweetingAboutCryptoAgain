@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { ResponsiveContainer, ComposedChart, AreaChart, Area, Line, Scatter, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import React, {useEffect, useState, useLayoutEffect } from 'react';
+import { ResponsiveContainer, ComposedChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import TimeButton from './TimeButton';
 import SocialButton from './SocialButton';
 import Post from "../helpers/post.js";
@@ -8,10 +8,11 @@ import './Dashboard.scss';
 
 const Dashboard = () => {
     const [matches, setMatches] = useState( window.matchMedia("(min-width: 768px)").matches )
-    const [pointRadius, setpointRadius] = useState(10);
+    const [pointRadius, setpointRadius] = useState(4);
+    const [pointStroke, setpointStroke] = useState(2);
     const [cryptoname, setcryptoName] = useState('dogecoin');
     const [fiatname, setfiatname] = useState('inr');
-    const [timeSpan, setTimeSpan] = useState(365);
+    const [timeSpan, setTimeSpan] = useState(30);
     const [interval, setinterval] = useState('daily');
     
     const [cryptoState, setCryptoState] = useState([]);
@@ -54,16 +55,12 @@ const Dashboard = () => {
     function MergeCryptoAndTweets() {
         console.log(`MergeCryptoAndTweets`);
         let mergeState = cryptoState;
-        console.log('pre cryptoState: ', mergeState);
-        console.log('pre tweetState: ', tweetState);
         mergeState.forEach(element => {
             let tweetOnDate = findTweetOnDate(element.date);
-            // console.log('tweetOnDate: ', tweetOnDate);
             element.tweet = tweetOnDate;
         });
-        console.log('post mergeState: ', mergeState);
-        console.log('post tweetState: ', tweetState);
         setCryptoState(mergeState);
+        setTimeSpan(365);
         settweetcryptoMergeDone(true);
     }
     function GetCryptoPrices() {
@@ -91,16 +88,20 @@ const Dashboard = () => {
         });
     }
 
+    useLayoutEffect (() => {
+        console.log('cryptoState', cryptoState);
+        console.log('tweetState', tweetState);
+        if(!tweetcryptoMergeDone && cryptoLoadDone && tweetLoadDone)
+            MergeCryptoAndTweets();
+    }, [tweetcryptoMergeDone, cryptoLoadDone, tweetLoadDone])
+
     useEffect(() => {
-        console.log(`useEffect`);
         window.matchMedia("(min-width: 600px)").addEventListener('change', e => setMatches( e.matches ));
         if(!cryptoLoadDone || timeSpan)
             GetCryptoPrices();
         if(!tweetLoadDone)
             GetElonTweets();
-        if(!tweetcryptoMergeDone && cryptoLoadDone && tweetLoadDone)
-            MergeCryptoAndTweets();
-    }, [tweetcryptoMergeDone, cryptoLoadDone, tweetLoadDone, tweetState, timeSpan])
+    }, [cryptoLoadDone, tweetLoadDone, timeSpan])
 
     const CustomTooltip = ({ active, payload, label }) => {
         let muskpflink = 'https://pbs.twimg.com/profile_images/1474910968157249536/FS8-70Ie_400x400.jpg';
@@ -142,8 +143,8 @@ const Dashboard = () => {
         const { cx, cy, stroke, payload, value } = props;
         if (findTweetOnDate(payload.date) !== '') {
             return (
-                <svg x={cx-pointRadius} y={cy-pointRadius} width={300} height={300} viewBox="0 0 300 300">
-                    <circle cx={pointRadius} cy={pointRadius} r={pointRadius} fill="#f2cc93" />
+                <svg x={cx-pointRadius-pointStroke} y={cy-pointRadius-pointStroke} width={300} height={300} viewBox="0 0 300 300">
+                    <circle cx={pointRadius+pointStroke} cy={pointRadius+pointStroke} r={pointRadius} strokeWidth={pointStroke} fill="#f2cc93" stroke='#8884d8' />
                 </svg>
             );
         }
