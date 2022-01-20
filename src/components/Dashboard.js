@@ -113,9 +113,10 @@ const Dashboard = () => {
                 let tweetOnDate = findTweetOnDate(label);
                 return (
                     <div className="custom_tooltip">
-                        <div className="custom_tooltip" style={{display: 'flex'}}>
-                            {tweetOnDate !== '' && <input className="elon_pfp" type="image" src={muskpflink} alt='elon_pfp?' />}
-                            <p className="label">{`${getCurrSymbol} ${payload[0].value} - ${formattedDate}`}</p>
+                        <div className="custom_tooltip_div">
+                            {/* {tweetOnDate !== '' && <input className="elon_pfp" type="image" src={muskpflink} alt='elon_pfp?' />} */}
+                            <p className="label">{`${formattedDate}`}</p>
+                            <p className="label">{`${getCurrSymbol} ${payload[0].value}`}</p>
                             {/* {tweetOnDate !== '' && <p className="label">Elon</p>} */}
                         </div>
                         {tweetOnDate && <p className="tweet">{`${tweetOnDate}`}</p>}
@@ -127,9 +128,10 @@ const Dashboard = () => {
                 let tweetOnDate = findTweetOnDate(findDateOnIndex(label));
                 return (
                     <div className="custom_tooltip">
-                        <div className="custom_tooltip" style={{display: 'flex'}}>
-                            {tweetOnDate !== '' && <input className="elon_pfp" type="image" src={muskpflink} alt='elon_pfp?' />}
-                            <p className="label">{`${getCurrSymbol} ${payload[0].value} - ${formattedDate}`}</p>
+                        <div className="custom_tooltip_div">
+                            <p className="label">{`${formattedDate}`}</p>
+                            {/* {tweetOnDate !== '' && <input className="elon_pfp" type="image" src={muskpflink} alt='elon_pfp?' />} */}
+                            <p className="label">{`${getCurrSymbol} ${payload[0].value}`}</p>
                             {/* {tweetOnDate !== '' && <p className="label">Elon</p>} */}
                         </div>
                         {tweetOnDate && <p className="tweet">{`${tweetOnDate}`}</p>}

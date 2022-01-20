@@ -46,13 +46,17 @@
         }
     }
     .custom_tooltip {
-        border-radius: 1pc;
         max-width: 20pc;
-        background-color: "black";
         @include set_font_fam;
+        .custom_tooltip_div {
+            display: flex;
+            border-radius: 1pc;
+            justify-content: space-around;
+            background-color: #fcc27c;
+        }
         .elon_pfp{
             max-width: 3pc;
-            border-radius: 1pc 0pc 1pc 0pc;
+            // border-radius: 1pc 0pc 1pc 0pc;
         }
         .label {
             color: "white";
