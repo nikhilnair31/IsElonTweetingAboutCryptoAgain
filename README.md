@@ -1,4 +1,13 @@
-# IsElonTweetingAboutCryptoAgain?
+<img src="./public/images/iselontweetingaboutcryptoagain.png"  />
+
+## What is IsElonTweetingAboutCryptoAgain?
+Built a website that overlays historical cryptocurrency prices with Elon Musk's tweets in realtime, for users to infer the degree of his influence on the market. Also used an AWS Lambda function to extract his tweets on an hourly schedule using Twitter API.
+
+## To-Dos
+
+<details>
+<summary>To-Do</summary>
+
 ## To-Do
 * General
     - [ ] Show tweets as Dots overlayed onto the Area chart.
@@ -14,3 +23,4 @@
     - [ ] Apply proper rules in Firebase RTDB to not get spammed again
 * Other
     - [ ] Improvements?
+</details>
