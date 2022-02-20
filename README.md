@@ -1,6 +1,6 @@
 <img src="./public/images/iselontweetingaboutcryptoagain.png"  />
 
-## What is IsElonTweetingAboutCryptoAgain?
+## What's IsElonTweetingAboutCryptoAgain?
 Built a website that overlays historical cryptocurrency prices with Elon Musk's tweets in realtime, for users to infer the degree of his influence on the market. Also used an AWS Lambda function to extract his tweets on an hourly schedule using Twitter API.
 
 ## To-Dos
